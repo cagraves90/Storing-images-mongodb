@@ -6,18 +6,8 @@ const bodyParser = require("body-parser");
 
 /* ============== Middleware ================== */
 app.use(cors());
-app.use(express.json());
-
-app.use(bodyParser.json({ limit: "35mb" }));
-
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-    limit: "35mb",
-    parameterLimit: 50000,
-  })
-);
-
+app.use(express.json({ limit: "200kb" }));
+app.use(bodyParser.json());
 // ---------------------------------------------- MongoDB Schema Creation ----------------------------------------------
 
 require("./userDetails");
@@ -30,7 +20,7 @@ const ImageDetails = mongoose.model("ImageDetails");
 const mongoURL = "mongodb://localhost:27017/ImageDetails";
 
 mongoose
-  .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoURL)
   .then(() => {
     console.log("MongoDB connected");
   })
@@ -85,11 +75,13 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/upload-image", async (req, res) => {
-  const { base64 } = req.body;
+  const { base64, model, year } = req.body;
 
   try {
     await ImageDetails.create({
       image: base64,
+      model: model,
+      year: year,
     });
     return res.status(200).json({ message: "Image uploaded successfully" });
   } catch (error) {

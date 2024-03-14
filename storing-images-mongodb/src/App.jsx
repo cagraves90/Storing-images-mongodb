@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <div>Hello world!</div>
+      <h1>Car Information Upload GUI</h1>
       <ImageUpload />
     </>
   )
