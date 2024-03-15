@@ -98,3 +98,14 @@ app.get("/get-image", async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 });
+
+app.get("/get-image/:model", async (req, res) => {
+  try {
+    const { model } = req.params;
+    await ImageDetails.find({ model: model }).then((data) => {
+      return res.status(200).json({ status: "ok", data: data });
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
