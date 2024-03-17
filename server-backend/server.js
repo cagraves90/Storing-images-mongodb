@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 
 /* ============== Middleware ================== */
 app.use(cors());
-app.use(express.json({ limit: "200kb" }));
+app.use(express.json({ limit: "200kb" })); // to ensure that larger files can get uploaded
 app.use(bodyParser.json());
 // ---------------------------------------------- MongoDB Schema Creation ----------------------------------------------
 
